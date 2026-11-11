@@ -67,45 +67,52 @@ if ("IntersectionObserver" in window) {
 
 console.log("%c Adelia Wardoyo — Portfolio ", "background:#dce7d7;color:#263326;padding:8px 12px;border-radius:8px;");
 
+
 const canvas = document.getElementById("prabowoCanvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas?.getContext("2d");
 
-const pixelSize = 12;
+if (canvas && ctx) {
+  const pixelSize = 12;
 
-const palette = {
+  const palette = {
     ".": null,
-    h: "#29232b",
-    s: "#e8b18a",
-    u: "#d8c19a",
-    U: "#f0dfbd",
-    r: "#a94b45",
-    d: "#51483f",
-    b: "#29232b"
-};
+    o: "#1a1030",
+    h: "#e8a92b",
+    H: "#ffd470",
+    s: "#ffd0a8",
+    S: "#d9906a",
+    e: "#1a1030",
+    r: "#e4506b",
+    b: "#3d6fd6",
+    B: "#2a4ea3",
+    f: "#6a4736",
+  };
 
-const sprite = [
-    "......hhhh......",
-    ".....hooooh.....",
-    ".....osssso.....",
-    ".....osssso.....",
-    "......osso......",
-    "....ouuuuuo.....",
-    "....ouUUUuo.....",
-    "....ourrruo.....",
-    "....ouuuuuo.....",
-    ".....ouuuo......",
-    ".....odddo......",
-    ".....odddo......",
-    ".....odddo......",
-    ".....odddo......",
-    "....ob....bo....",
-    "....ob....bo...."
-];
+  // Prabowo-inspired 16x16 sprite
+  const sprite = [
+    "................",
+    ".....oooooo.....",
+    "....ohhhhhho....",
+    "...ohhHHHHhho...",
+    "...ohhhhhhhho...",
+    "...ohssssssho...",
+    "...oseessssho...",
+    "...ohssssssho...",
+    "....oSSSSSSo....",
+    "...orrrrrrrro...",
+    "..obbrrbbbbbbo..",
+    "..obbbbbbbbbbo..",
+    "..obbbBbbbbbbo..",
+    "...oBBBBBBBBo...",
+    "....oBBooBBo....",
+    "...offfoofffo...",
+  ];
 
-let isKilling = false;
-let animationFrame = 0;
+  let isKilling = false;
+  let animationFrame = 0;
+  let animationId;
 
-function drawSprite() {
+  function drawSprite() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const progress = animationFrame;
@@ -119,70 +126,72 @@ function drawSprite() {
     ctx.translate(-96, -96);
 
     sprite.forEach((row, y) => {
-        [...row].forEach((pixel, x) => {
-            if (palette[pixel]) {
-                ctx.fillStyle = palette[pixel];
-                ctx.fillRect(
-                    x * pixelSize,
-                    y * pixelSize,
-                    pixelSize,
-                    pixelSize
-                );
-            }
-        });
+      [...row].forEach((pixel, x) => {
+        if (palette[pixel]) {
+          ctx.fillStyle = palette[pixel];
+          ctx.fillRect(
+            x * pixelSize,
+            y * pixelSize,
+            pixelSize,
+            pixelSize
+          );
+        }
+      });
     });
 
     ctx.restore();
 
+    // Among Us-style kill effect
     if (isKilling && progress > 5 && progress < 22) {
-        // Red kill slash
-        ctx.save();
-        ctx.strokeStyle = "#d9535d";
-        ctx.lineWidth = 9;
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.moveTo(35, 45);
-        ctx.lineTo(155, 145);
-        ctx.stroke();
+      ctx.save();
 
-        // Bone effect
-        ctx.fillStyle = "#fff4df";
-        ctx.fillRect(120, 120, 12, 34);
-        ctx.fillRect(112, 118, 10, 10);
-        ctx.fillRect(130, 145, 10, 10);
-        ctx.restore();
+      ctx.strokeStyle = "#e4506b";
+      ctx.lineWidth = 9;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(35, 45);
+      ctx.lineTo(155, 145);
+      ctx.stroke();
+
+      // Bone
+      ctx.fillStyle = "#fff4df";
+      ctx.fillRect(120, 120, 12, 34);
+      ctx.fillRect(112, 118, 10, 10);
+      ctx.fillRect(130, 145, 10, 10);
+
+      ctx.restore();
     }
-}
+  }
 
-function animate() {
+  function animate() {
     if (!isKilling) return;
 
     animationFrame++;
-
     drawSprite();
 
     if (animationFrame < 35) {
-        requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     } else {
-        isKilling = false;
-        animationFrame = 0;
-        drawSprite();
+      isKilling = false;
+      animationFrame = 0;
+      drawSprite();
     }
-}
+  }
 
-function killPrabowo() {
+  function killPrabowo() {
     if (isKilling) return;
 
     isKilling = true;
     animationFrame = 0;
     animate();
-}
+  }
 
-canvas.addEventListener("click", killPrabowo);
-canvas.addEventListener("touchstart", (event) => {
+  canvas.addEventListener("click", killPrabowo);
+
+  canvas.addEventListener("touchstart", (event) => {
     event.preventDefault();
     killPrabowo();
-}, { passive: false });
+  }, { passive: false });
 
-drawSprite();
-
+  drawSprite();
+}
