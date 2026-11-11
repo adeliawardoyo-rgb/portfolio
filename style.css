@@ -46,9 +46,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   transform: translateX(-50%);
   background: linear-gradient(
     135deg,
-    #e4ecdf 0%,
-    #edf1e8 60%,
-    #f3eee9 100%
+    #d9d0e8 0%,
+    #e4dced 60%,
+    #f0e5e8 100%
   );
 }
 
