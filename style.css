@@ -27,7 +27,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-links a:hover, .text-link:hover { color: #8b9f82; }
 .nav-contact { padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); }
 .nav-contact span { margin-left: 8px; }
-.section-shell { width: min(1180px, calc(100% - 64px)); margin: auto; }
+.section-shell { width: min(1060px, calc(100% - 64px)); margin: auto; }
 .hero { min-height: 690px; padding-top: 105px; padding-bottom: 110px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 40px; position: relative; }
 
 /* Hero background — soft sage green */
