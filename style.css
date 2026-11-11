@@ -27,7 +27,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-links a:hover, .text-link:hover { color: #8b9f82; }
 .nav-contact { padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); }
 .nav-contact span { margin-left: 8px; }
-.section-shell { width: min(980px, calc(100% - 64px)); margin: auto; }
+.section-shell { width: min(1180px, calc(100% - 64px)); margin: auto; }
 .hero { min-height: 690px; padding-top: 105px; padding-bottom: 110px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 40px; position: relative; }
 
 /* Hero background — soft sage green */
@@ -226,47 +226,9 @@ h1 em, h2 em { color: #91a78a; font-style: normal; }
   .contact-meta { flex-direction: column; gap: 8px; margin-top: 45px; }
   .site-footer { padding: 22px 0; flex-wrap: wrap; }.site-footer span:nth-child(2) { display: none; }
 }
-
-/* Pixel Prabowo companion */
-.prabowo-widget {
-    position: fixed;
-    left: 50%;
-    bottom: 12px;
-    width: 140px;
-    z-index: 9998;
-    text-align: center;
-    pointer-events: none;
-    transform: translateX(-50%);
-    transition: left 0.12s linear;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-#prabowoCanvas {
-    display: block;
-    width: 120px;
-    height: 120px;
-    margin: auto;
-    image-rendering: pixelated;
-    pointer-events: auto;
-    cursor: pointer;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.prabowo-hint {
-    display: inline-block;
-    margin-top: -5px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: #f0d9dc;
-    color: #51483f;
-    font-size: 11px;
-    font-family: var(--body);
-    box-shadow: 0 3px 10px rgba(0,0,0,.08);
-    pointer-events: none;
-}
-
-.prabowo-widget:hover .prabowo-hint {
-    background: #e6e0f0;
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
