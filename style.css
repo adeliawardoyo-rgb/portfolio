@@ -69,17 +69,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   isolation: isolate;
 }
 
-.hero::after {
-  content: "✿";
-  position: absolute;
-  z-index: -1;
-  top: 105px;
-  left: 48%;
-  color: rgba(190, 145, 178, .35);
-  font-size: 4rem;
-  transform: rotate(-18deg);
-  pointer-events: none;
-}
 
 .eyebrow { margin: 0 0 20px; font-size: .68rem; font-weight: 700; letter-spacing: .16em; color: #788273; }
 .status-dot { display: inline-block; width: 7px; height: 7px; margin: 0 8px 1px 0; border-radius: 50%; background: #9ab18f; box-shadow: 0 0 0 4px rgba(154,177,143,.16); }
