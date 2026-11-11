@@ -226,3 +226,46 @@ h1 em, h2 em { color: #91a78a; font-style: normal; }
   .contact-meta { flex-direction: column; gap: 8px; margin-top: 45px; }
   .site-footer { padding: 22px 0; flex-wrap: wrap; }.site-footer span:nth-child(2) { display: none; }
 }
+
+/* Prabowo pixel character */
+.prabowo-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 120px;
+    z-index: 999;
+    text-align: center;
+    cursor: pointer;
+}
+
+#prabowoCanvas {
+    width: 120px;
+    height: 120px;
+    image-rendering: pixelated;
+    display: block;
+    cursor: pointer;
+}
+
+.prabowo-hint {
+    display: inline-block;
+    margin-top: -5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #f0d9dc;
+    color: #51483f;
+    font-size: 11px;
+    font-family: var(--body);
+    box-shadow: 0 3px 10px rgba(0,0,0,.08);
+}
+
+/* Keep the normal browser cursor */
+body,
+a,
+button {
+    cursor: auto;
+}
+
+.prabowo-widget,
+#prabowoCanvas {
+    cursor: pointer;
+}
