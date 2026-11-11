@@ -110,7 +110,7 @@ if (canvas && ctx) {
 
   let isKilling = false;
   let animationFrame = 0;
-  let animationId;
+  
 
   function drawSprite() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -170,7 +170,7 @@ if (canvas && ctx) {
     drawSprite();
 
     if (animationFrame < 35) {
-      animationId = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     } else {
       isKilling = false;
       animationFrame = 0;
