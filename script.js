@@ -195,3 +195,6 @@ if (canvas && ctx) {
 
   drawSprite();
 }
+
+console.log("Canvas:", document.getElementById("prabowoCanvas"));
+console.log("Prabowo widget loaded!");
