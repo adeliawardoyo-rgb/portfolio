@@ -258,14 +258,52 @@ h1 em, h2 em { color: #91a78a; font-style: normal; }
     box-shadow: 0 3px 10px rgba(0,0,0,.08);
 }
 
-/* Keep the normal browser cursor */
-body,
-a,
-button {
-    cursor: auto;
-}
-
+/* Prabowo character interaction */
 .prabowo-widget,
 #prabowoCanvas {
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.prabowo-widget {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#prabowoCanvas {
+    image-rendering: pixelated;
+    touch-action: manipulation;
+    transition: transform .2s ease;
+}
+
+.prabowo-widget:hover #prabowoCanvas {
+    transform: translateY(-5px);
+}
+
+.prabowo-hint {
+    transition: transform .2s ease, background .2s ease;
+}
+
+.prabowo-widget:hover .prabowo-hint {
+    background: #e6e0f0;
+    transform: translateY(-2px);
+}
+
+@keyframes prabowoIdle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+#prabowoCanvas {
+    animation: prabowoIdle 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #prabowoCanvas {
+        animation: none;
+    }
 }
