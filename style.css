@@ -39,17 +39,46 @@ button, a { -webkit-tap-highlight-color: transparent; }
   content: "";
   position: absolute;
   z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+  inset: 0 auto 0 50%;
   width: 100vw;
   transform: translateX(-50%);
-  background: linear-gradient(
-    135deg,
-    #d9d0e8 0%,
-    #e4dced 60%,
-    #f0e5e8 100%
-  );
+
+  background:
+    radial-gradient(
+      ellipse at 12% 15%,
+      rgba(245, 190, 210, .75),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 85% 20%,
+      rgba(211, 190, 235, .75),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 65% 90%,
+      rgba(255, 215, 194, .65),
+      transparent 38%
+    ),
+    linear-gradient(
+      125deg,
+      #f5e2eb 0%,
+      #eee3f5 48%,
+      #f9e9e1 100%
+    );
+  .hero {
+  isolation: isolate;
+}
+
+.hero::after {
+  content: "✿";
+  position: absolute;
+  z-index: -1;
+  top: 105px;
+  left: 48%;
+  color: rgba(190, 145, 178, .35);
+  font-size: 4rem;
+  transform: rotate(-18deg);
+  pointer-events: none;
 }
 
 .eyebrow { margin: 0 0 20px; font-size: .68rem; font-weight: 700; letter-spacing: .16em; color: #788273; }
