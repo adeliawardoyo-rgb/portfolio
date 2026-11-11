@@ -29,6 +29,29 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-contact span { margin-left: 8px; }
 .section-shell { width: min(1180px, calc(100% - 64px)); margin: auto; }
 .hero { min-height: 690px; padding-top: 105px; padding-bottom: 110px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 40px; position: relative; }
+
+/* Hero background — soft sage green */
+.hero {
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    135deg,
+    #e4ecdf 0%,
+    #edf1e8 60%,
+    #f3eee9 100%
+  );
+}
+
 .eyebrow { margin: 0 0 20px; font-size: .68rem; font-weight: 700; letter-spacing: .16em; color: #788273; }
 .status-dot { display: inline-block; width: 7px; height: 7px; margin: 0 8px 1px 0; border-radius: 50%; background: #9ab18f; box-shadow: 0 0 0 4px rgba(154,177,143,.16); }
 h1, h2, h3, p { margin-top: 0; }
