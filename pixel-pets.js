@@ -9,7 +9,7 @@
   if (window.__pixelPets) return;
   window.__pixelPets = true;
 
-  var S = 1,5, N = 20, OUT = '#2b1736';
+  var S = 1.5, N = 20, OUT = '#2b1736';
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
