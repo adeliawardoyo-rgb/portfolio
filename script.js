@@ -186,34 +186,3 @@ canvas.addEventListener("touchstart", (event) => {
 
 drawSprite();
 
-const palette = {
-  o: '#1a1030', // outline
-  h: '#e8a92b', // rambut
-  H: '#ffd470', // highlight
-  s: '#ffd0a8', // kulit
-  S: '#d9906a', // shading kulit
-  e: '#1a1030', // mata
-  r: '#e4506b', // dasi
-  b: '#3d6fd6', // jas
-  B: '#2a4ea3', // bayangan jas
-  f: '#6a4733', // sepatu
-};
-
-const sprite = [
-  "................",
-  ".....oooooo.....",
-  "....ohhhhhho....",
-  "...ohhHHHHhho...",
-  "...ohhhhhhhho...",
-  "...ohssssssho...",
-  "...oseesssseho..",
-  "...ohssssssho...",
-  "....oSSSSSSo....",
-  "...orrrrrrrro...",
-  "..obbrrbbbbbbo..",
-  "..obbbbbbbbbbo..",
-  "..obbbBbbbbbbo..",
-  "...oBBBBBBBBo...",
-  "....oBBooBBo....",
-  "...offfoofffo...",
-];
