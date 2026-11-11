@@ -39,34 +39,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
   content: "";
   position: absolute;
   z-index: -1;
-  inset: 0 auto 0 50%;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   width: 100vw;
   transform: translateX(-50%);
-
-  background:
-    radial-gradient(
-      ellipse at 12% 15%,
-      rgba(245, 190, 210, .75),
-      transparent 38%
-    ),
-    radial-gradient(
-      ellipse at 85% 20%,
-      rgba(211, 190, 235, .75),
-      transparent 40%
-    ),
-    radial-gradient(
-      ellipse at 65% 90%,
-      rgba(255, 215, 194, .65),
-      transparent 38%
-    ),
-    linear-gradient(
-      125deg,
-      #f5e2eb 0%,
-      #eee3f5 48%,
-      #f9e9e1 100%
-    );
-  .hero {
-  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    #e4ecdf 0%,
+    #edf1e8 60%,
+    #f3eee9 100%
+  );
 }
 
 
