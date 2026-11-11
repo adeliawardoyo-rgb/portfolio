@@ -73,6 +73,47 @@ const ctx = canvas?.getContext("2d");
 
 if (canvas && ctx) {
   const pixelSize = 12;
+  const widget = document.getElementById("prabowoWidget");
+
+if (widget) {
+    let targetX = window.innerWidth / 2;
+    let currentX = targetX;
+    let isMoving = false;
+
+    document.addEventListener("pointermove", (event) => {
+        if (event.pointerType !== "mouse") return;
+
+        targetX = event.clientX;
+
+        if (!isMoving) {
+            isMoving = true;
+            followCursor();
+        }
+    });
+
+    function followCursor() {
+        currentX += (targetX - currentX) * 0.08;
+
+        const halfWidth = 70;
+        const safeX = Math.max(
+            halfWidth,
+            Math.min(window.innerWidth - halfWidth, currentX)
+        );
+
+        widget.style.left = `${safeX}px`;
+
+        if (Math.abs(targetX - currentX) > 0.5) {
+            requestAnimationFrame(followCursor);
+        } else {
+            currentX = targetX;
+            widget.style.left = `${Math.max(
+                halfWidth,
+                Math.min(window.innerWidth - halfWidth, targetX)
+            )}px`;
+            isMoving = false;
+        }
+    }
+}
 
   const palette = {
     ".": null,
