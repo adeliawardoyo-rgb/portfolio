@@ -1,4 +1,3 @@
-/* ADELIA WARDOYO — pastel editorial portfolio */
 :root {
   --cream: #f8f7f2;
   --paper: #fffefa;
@@ -578,4 +577,25 @@ body {
   .hero-dribbble .hero-actions {
     flex-wrap: wrap;
   }
+}
+.rotating-heading {
+  min-height: 2.3em;
+  display: flex;
+  align-items: center;
+}
+
+#hero-heading {
+  display: block;
+  opacity: 1;
+  transition: opacity .45s ease, transform .45s ease;
+}
+
+#hero-heading.fade-out {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+#hero-heading .accent {
+  color: #e58ca9;
+  font-style: normal;
 }
