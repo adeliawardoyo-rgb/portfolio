@@ -1,4 +1,3 @@
-// Adelia Wardoyo — portfolio interactions
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorOutline = document.querySelector(".cursor-outline");
 const flowerContainer = document.querySelector("#flower-trail");
@@ -47,7 +46,7 @@ document.querySelectorAll("a, button, .expertise-card, .work-item").forEach((ele
   element.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
 });
 
-// Reveal sections gently as they enter the viewport.
+
 const revealItems = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
@@ -239,3 +238,24 @@ if (widget) {
 
 console.log("Canvas:", document.getElementById("prabowoCanvas"));
 console.log("Prabowo widget loaded!");
+
+const heroHeading = document.getElementById("hero-heading");
+
+const greetings = [
+  "Hi, I'm Adelia Wardoyo.",
+  'Building reliable<br><em class="accent">networks & systems.</em>'
+];
+
+let currentGreeting = 0;
+
+setInterval(() => {
+  heroHeading.classList.add("fade-out");
+
+  setTimeout(() => {
+    currentGreeting = (currentGreeting + 1) % greetings.length;
+    heroHeading.innerHTML = greetings[currentGreeting];
+
+    heroHeading.classList.remove("fade-out");
+  }, 450);
+
+}, 5000);
