@@ -66,179 +66,6 @@ if ("IntersectionObserver" in window) {
 
 console.log("%c Adelia Wardoyo — Portfolio ", "background:#dce7d7;color:#263326;padding:8px 12px;border-radius:8px;");
 
-
-const canvas = document.getElementById("prabowoCanvas");
-const ctx = canvas?.getContext("2d");
-
-if (canvas && ctx) {
-  const pixelSize = 12;
-  const widget = document.getElementById("prabowoWidget");
-
-if (widget) {
-    let targetX = window.innerWidth / 2;
-    let currentX = targetX;
-    let isMoving = false;
-
-    document.addEventListener("pointermove", (event) => {
-        if (event.pointerType !== "mouse") return;
-
-        targetX = event.clientX;
-
-        if (!isMoving) {
-            isMoving = true;
-            followCursor();
-        }
-    });
-
-    function followCursor() {
-        currentX += (targetX - currentX) * 0.08;
-
-        const halfWidth = 70;
-        const safeX = Math.max(
-            halfWidth,
-            Math.min(window.innerWidth - halfWidth, currentX)
-        );
-
-        widget.style.left = `${safeX}px`;
-
-        if (Math.abs(targetX - currentX) > 0.5) {
-            requestAnimationFrame(followCursor);
-        } else {
-            currentX = targetX;
-            widget.style.left = `${Math.max(
-                halfWidth,
-                Math.min(window.innerWidth - halfWidth, targetX)
-            )}px`;
-            isMoving = false;
-        }
-    }
-}
-
-  const palette = {
-    ".": null,
-    o: "#1a1030",
-    h: "#e8a92b",
-    H: "#ffd470",
-    s: "#ffd0a8",
-    S: "#d9906a",
-    e: "#1a1030",
-    r: "#e4506b",
-    b: "#3d6fd6",
-    B: "#2a4ea3",
-    f: "#6a4736",
-  };
-
-  // Prabowo-inspired 16x16 sprite
-  const sprite = [
-    "................",
-    ".....oooooo.....",
-    "....ohhhhhho....",
-    "...ohhHHHHhho...",
-    "...ohhhhhhhho...",
-    "...ohssssssho...",
-    "...oseessssho...",
-    "...ohssssssho...",
-    "....oSSSSSSo....",
-    "...orrrrrrrro...",
-    "..obbrrbbbbbbo..",
-    "..obbbbbbbbbbo..",
-    "..obbbBbbbbbbo..",
-    "...oBBBBBBBBo...",
-    "....oBBooBBo....",
-    "...offfoofffo...",
-  ];
-
-  let isKilling = false;
-  let animationFrame = 0;
-  
-
-  function drawSprite() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const progress = animationFrame;
-    const shake = isKilling ? Math.sin(progress * 1.8) * 5 : 0;
-    const lift = isKilling ? Math.min(progress * 1.5, 25) : 0;
-    const rotation = isKilling ? Math.min(progress * 0.035, 0.5) : 0;
-
-    ctx.save();
-    ctx.translate(96 + shake, 96 - lift);
-    ctx.rotate(rotation);
-    ctx.translate(-96, -96);
-
-    sprite.forEach((row, y) => {
-      [...row].forEach((pixel, x) => {
-        if (palette[pixel]) {
-          ctx.fillStyle = palette[pixel];
-          ctx.fillRect(
-            x * pixelSize,
-            y * pixelSize,
-            pixelSize,
-            pixelSize
-          );
-        }
-      });
-    });
-
-    ctx.restore();
-
-    // Among Us-style kill effect
-    if (isKilling && progress > 5 && progress < 22) {
-      ctx.save();
-
-      ctx.strokeStyle = "#e4506b";
-      ctx.lineWidth = 9;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(35, 45);
-      ctx.lineTo(155, 145);
-      ctx.stroke();
-
-      // Bone
-      ctx.fillStyle = "#fff4df";
-      ctx.fillRect(120, 120, 12, 34);
-      ctx.fillRect(112, 118, 10, 10);
-      ctx.fillRect(130, 145, 10, 10);
-
-      ctx.restore();
-    }
-  }
-
-  function animate() {
-    if (!isKilling) return;
-
-    animationFrame++;
-    drawSprite();
-
-    if (animationFrame < 35) {
-      requestAnimationFrame(animate);
-    } else {
-      isKilling = false;
-      animationFrame = 0;
-      drawSprite();
-    }
-  }
-
-  function killPrabowo() {
-    if (isKilling) return;
-
-    isKilling = true;
-    animationFrame = 0;
-    animate();
-  }
-
-  canvas.addEventListener("click", killPrabowo);
-
-  canvas.addEventListener("touchstart", (event) => {
-    event.preventDefault();
-    killPrabowo();
-  }, { passive: false });
-
-  drawSprite();
-}
-
-console.log("Canvas:", document.getElementById("prabowoCanvas"));
-console.log("Prabowo widget loaded!");
-
 const heroHeading = document.getElementById("hero-heading");
 
 const greetings = [
@@ -260,22 +87,65 @@ setInterval(() => {
 
 }, 5000);
 
-const butterfly = document.querySelector('.butterfly');
-let flyTimer;
+/* ---------- Butterfly ---------- */
+const bf = document.querySelector(".butterfly");
+const anchor = document.getElementById("butterfly-anchor");
 
-function updateButterfly() {
-  // 0 at the top, 1 after scrolling about 80% of the screen height
-  const p = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
-  butterfly.style.setProperty('--p', p);
+if (bf && anchor) {
+  const SMALL = 90;   // size (px) when it's flying around small
+  let size = 400;     // big size, measured from the anchor
+  let lastSide = null;
+  let hopTimer;
 
-  // flap faster while scrolling, calm down 150ms after you stop
-  butterfly.classList.add('flying');
-  clearTimeout(flyTimer);
-  flyTimer = setTimeout(() => butterfly.classList.remove('flying'), 150);
+  const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
+  const lerp  = (a, b, t) => a + (b - a) * t;
+  const ease  = (t) => t * t * (3 - 2 * t);
+
+  function measure() {
+    size = clamp(anchor.getBoundingClientRect().width, 220, 460);
+    bf.style.width = bf.style.height = size + "px";
+    update();
+  }
+
+  function update() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const a  = anchor.getBoundingClientRect();   // where the big butterfly belongs
+
+    // 0 = top of page, 1 = fully shrunk (after ~70% of a screen)
+    const p = clamp(window.scrollY / (vh * 0.7), 0, 1);
+    const t = ease(p);
+
+    // switch side every screen of scrolling: 1 = right, -1 = left
+    const side = Math.floor(window.scrollY / vh) % 2 === 0 ? 1 : -1;
+
+    const startX = a.left + a.width / 2;
+    const startY = a.top + a.height / 2;
+    const endX = side === 1 ? vw - SMALL / 2 - 20 : SMALL / 2 + 20;
+    const endY = 100;
+
+    const cx = lerp(startX, endX, t);
+    const cy = lerp(startY, endY, t);
+    const scale = lerp(1, SMALL / size, t);
+
+    bf.style.transform =
+      `translate(${cx - size / 2}px, ${cy - size / 2}px) scale(${scale})`;
+
+    bf.style.setProperty("--m", clamp((p - 0.25) / 0.5, 0, 1));
+    bf.style.setProperty("--face", side);
+
+    if (lastSide !== null && side !== lastSide) {
+      bf.classList.add("hop");
+      clearTimeout(hopTimer);
+      hopTimer = setTimeout(() => bf.classList.remove("hop"), 900);
+    }
+    lastSide = side;
+  }
+
+  window.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
+
+  measure();
+  requestAnimationFrame(() => bf.classList.add("ready"));
 }
-
-window.addEventListener('scroll', () => {
-  requestAnimationFrame(updateButterfly);
-}, { passive: true });
-
-updateButterfly();
