@@ -260,39 +260,22 @@ setInterval(() => {
 
 }, 5000);
 
-.butterfly {
-  --p: 0;
-  position: fixed;
-  top: 18vh;
-  right: 10vw;
-  width: 260px;
-  height: 220px;
-  z-index: 50;
-  pointer-events: none; /* clicks pass through */
-  transform:
-    translate(calc(var(--p) * -30vw), calc(var(--p) * 55vh))
-    scale(calc(1 - var(--p) * 0.8))
-    rotate(calc(var(--p) * -15deg));
-  transition: transform 0.15s ease-out;
+const butterfly = document.querySelector('.butterfly');
+let flyTimer;
+
+function updateButterfly() {
+  // 0 at the top, 1 after scrolling about 80% of the screen height
+  const p = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
+  butterfly.style.setProperty('--p', p);
+
+  // flap faster while scrolling, calm down 150ms after you stop
+  butterfly.classList.add('flying');
+  clearTimeout(flyTimer);
+  flyTimer = setTimeout(() => butterfly.classList.remove('flying'), 150);
 }
 
-.wing path { fill: #e9a8c4; }
-.body { fill: #3b2f3a; }
+window.addEventListener('scroll', () => {
+  requestAnimationFrame(updateButterfly);
+}, { passive: true });
 
-.wing {
-  transform-origin: 60px 50px; /* the body is the hinge */
-  animation: flap 1.6s ease-in-out infinite;
-}
-.wing-right { animation-name: flap; }
-
-@keyframes flap {
-  0%, 100% { transform: scaleX(1); }
-  50%      { transform: scaleX(0.35); }
-}
-
-/* faster flapping while scrolling */
-.butterfly.flying .wing { animation-duration: 0.25s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .wing { animation: none; }
-}
+updateButterfly();
