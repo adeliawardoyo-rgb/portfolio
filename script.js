@@ -122,7 +122,7 @@ if (bf && anchor) {
     const startX = a.left + a.width / 2;
     const startY = a.top + a.height / 2;
     const endX = side === 1 ? vw - SMALL / 2 - 20 : SMALL / 2 + 20;
-    const endY = 100;
+    const endY = 150;
 
     const cx = lerp(startX, endX, t);
     const cy = lerp(startY, endY, t);
